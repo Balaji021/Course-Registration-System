@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #e7ebf3, #f3f6fc);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 35px;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* CARD CONTAINER */
+        .table-card {
+            width: 90%;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.12),
+                0 5px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* GRID TITLE + BUTTON AREA (future-proof) */
+        .header-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px; /* row gap effect */
+            font-size: 16px;
+        }
+
+        thead {
+            background: none;
+        }
+
+        thead th {
+            padding: 14px 10px;
+            text-align: left;
+            font-weight: 700;
+            color: #2563eb;
+            border-bottom: 2px solid #2563eb;
+            font-size: 15px;
+        }
+
+        /* ROW CARD EFFECT */
+        tbody tr {
+            background: #ffffff;
+            box-shadow: 
+                0 3px 8px rgba(0,0,0,0.08),
+                0 1px 2px rgba(0,0,0,0.06);
+            transition: 0.25s ease;
+        }
+
+        tbody td {
+            padding: 14px 12px;
+            color: #475569;
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 8px 18px rgba(0,0,0,0.12),
+                0 3px 5px rgba(0,0,0,0.08);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-style: italic;
+        }
+    </style>
+
+    <script type="text/javascript" src="coursescript.js"></script>
+
+</head>
+
+<body>
+
+    <h1>Available Courses</h1>
+
+    <div class="table-card">
+
+        <div class="header-grid">
+            <div class="header-title">Course List (Live Data)</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Course Id</th>
+                    <th>Course Name</th>
+                    <th>Trainer</th>
+                    <th>Duration (Weeks)</th>
+                </tr>
+            </thead>
+
+            <tbody id="coursetable">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        window.onload = function () {
+            showCourses();
+        };
+    </script>
+
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Poppins", sans-serif;
+            background: #f5f7fb;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 35px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* GRID */
+        .grid-container {
+            width: 90%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* CARD */
+        .course-card {
+            background: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 
+                0 4px 10px rgba(0, 0, 0, 0.08),
+                0 10px 25px rgba(0, 0, 0, 0.12);
+            transition: 0.25s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.15),
+                0 8px 18px rgba(0,0,0,0.10);
+        }
+
+        /* IMAGE */
+        .thumb {
+            height: 150px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* CATEGORY TAG */
+        .tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .beginner { background-color: #10b981; }
+        .intermediate { background-color: #3b82f6; }
+        .advanced { background-color: #ef4444; }
+
+        /* CONTENT */
+        .content {
+            padding: 15px 18px;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .desc {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        /* FOOTER */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #6b7280;
+            padding: 0 18px 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-style: italic;
+        }
+    </style>
+
+    <script type="text/javascript" src="coursescript.js"></script>
+</head>
+
+<body>
+
+    <h1>Available Courses</h1>
+
+    <div class="grid-container" id="coursetable">
+        <div class="loading">Loading courses...</div>
+    </div>
+
+    <script>
+        // DO NOT CHANGE BACKEND LOGIC — ONLY CARD HTML OUTPUT UPDATED
+        function showCourses() {
+            fetch("http://localhost:8080/courses")
+                .then(res => res.json())
+                .then(courses => {
+                    const container = document.getElementById("coursetable");
+                    container.innerHTML = "";
+
+                    courses.forEach(c => {
+
+                        // category based on duration
+                        let categoryClass = "beginner";
+                        let categoryText = "Beginner";
+                        if (c.duration >= 35) {
+                            categoryClass = "advanced";
+                            categoryText = "Expert";
+                        } else if (c.duration >= 30) {
+                            categoryClass = "intermediate";
+                            categoryText = "Intermediate";
+                        }
+
+                        // random thumbnails
+                        const img = `https://source.unsplash.com/random/400x300?technology,code,${c.courseName}`;
+
+                        const card = `
+                            <div class="course-card">
+                                <div class="thumb" style="background-image:url('${img}')">
+                                    <div class="tag ${categoryClass}">${categoryText}</div>
+                                </div>
+                                <div class="content">
+                                    <div class="title">${c.courseName}</div>
+                                    <div class="desc">Trainer: ${c.trainerName}</div>
+                                </div>
+                                <div class="footer">
+                                    <span>Course #${c.courseId}</span>
+                                    <span>${c.duration} Weeks</span>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += card;
+                    });
+                });
+        }
+
+        window.onload = showCourses;
+    </script>
+
+</body>
+</html> -->

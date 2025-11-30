@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CourseHub - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-color: #f9fafb;
+            --border-color: #e5e7eb;
+            --text-dark: #111827;
+            --text-light: #6b7280;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: var(--light-color);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        main {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .welcome-section {
+            margin-bottom: 2rem;
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon.primary {
+            background: var(--primary-color);
+        }
+
+        .card-icon.success {
+            background: var(--success-color);
+        }
+
+        .card-icon.warning {
+            background: var(--warning-color);
+        }
+
+        .card-icon.danger {
+            background: var(--danger-color);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .card-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .quick-actions {
+            margin-top: 2rem;
+        }
+
+        .quick-actions h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-menu {
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>CourseHub</span>
+                </div>
+                <nav class="nav-menu">
+                    <div class="nav-item active">
+                        <i class="fas fa-home"></i> Dashboard
+                    </div>
+                    <a href="index.html" class="nav-item">
+                        <i class="fas fa-book"></i> Courses
+                    </a>
+                    <a href="register.html" class="nav-item">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                    <a href="enrolled.html" class="nav-item">
+                        <i class="fas fa-list-check"></i> Enrolled
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="welcome-section">
+                <h1 class="welcome-title">Welcome back, Student!</h1>
+                <p class="welcome-subtitle">Track your learning progress and manage your courses</p>
+            </section>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCourses">12</div>
+                    <div class="stat-label">Available Courses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="enrolledCoursesCount">3</div>
+                    <div class="stat-label">Enrolled Courses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalStudents">85</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeStudents">42</div>
+                    <div class="stat-label">Active Students</div>
+                </div>
+            </section>
+
+            <section class="actions-grid">
+                <div class="card">
+                    <div class="card-icon primary">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="card-title">Browse Courses</h3>
+                    <p class="card-description">Explore our comprehensive catalog of courses across various disciplines and skill levels.</p>
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Browse Courses
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon success">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="card-title">New Registration</h3>
+                    <p class="card-description">Register for new courses and expand your knowledge with our expert-led programs.</p>
+                    <a href="register.html" class="btn btn-success">
+                        <i class="fas fa-plus-circle"></i> Register Now
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon warning">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                    <h3 class="card-title">My Enrollments</h3>
+                    <p class="card-description">View and manage your currently enrolled courses and track your progress.</p>
+                    <a href="enrolled.html" class="btn btn-outline">
+                        <i class="fas fa-eye"></i> View Enrollments
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon danger">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card-title">Progress Tracking</h3>
+                    <p class="card-description">Monitor your learning progress and achievements across all courses.</p>
+                    <button class="btn btn-outline" onclick="showProgress()">
+                        <i class="fas fa-chart-bar"></i> View Progress
+                    </button>
+                </div>
+            </section>
+
+            <section class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i> Notifications
+                    </button>
+                    <button class="btn btn-success" onclick="showSchedule()">
+                        <i class="fas fa-calendar"></i> My Schedule
+                    </button>
+                    <button class="btn btn-outline" onclick="showCertificates()">
+                        <i class="fas fa-certificate"></i> Certificates
+                    </button>
+                    <button class="btn btn-outline" onclick="showSettings()">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                    <button class="btn btn-outline" onclick="showHelp()">
+                        <i class="fas fa-question-circle"></i> Help & Support
+                    </button>
+                    <button class="btn btn-outline" onclick="showLogout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Quick action functions
+        function showProgress() {
+            alert('Progress tracking feature coming soon!');
+        }
+
+        function showNotifications() {
+            alert('You have 3 new notifications:\n• Assignment due for Web Development\n• New course available: AI Fundamentals\n• Certificate ready for JavaScript Basics');
+        }
+
+        function showSchedule() {
+            alert('Your weekly schedule:\nMonday: Web Development (2:00 PM)\nWednesday: Database Design (3:00 PM)\nFriday: UI/UX Design (1:00 PM)');
+        }
+
+        function showCertificates() {
+            alert('Your earned certificates:\n• HTML & CSS Fundamentals\n• JavaScript Basics\n• React Introduction');
+        }
+
+        function showSettings() {
+            alert('Settings panel coming soon!');
+        }
+
+        function showHelp() {
+            alert('Help & Support:\nEmail: support@coursehub.com\nPhone: 1-800-COURSES\nLive chat: Available 24/7');
+        }
+
+        function showLogout() {
+            if(confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('username');
+                localStorage.removeItem('email');
+                alert('Logged out successfully!');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function setupEventListeners() {
+            // Add any dashboard-specific event listeners here
+            console.log('Dashboard event listeners setup complete');
+        }
+
+        function loadDashboardData() {
+            // Load available courses
+            fetch('http://localhost:8080/courses')
+                .then(response => response.json())
+                .then(courses => {
+                    document.getElementById('totalCourses').textContent = courses.length;
+                })
+                .catch(error => console.error('Error loading courses:', error));
+
+            // Load enrolled students
+            fetch('http://localhost:8080/courses/enrolled')
+                .then(response => response.json())
+                .then(enrollments => {
+                    document.getElementById('totalStudents').textContent = enrollments.length;
+                    
+                    // Count unique students
+                    const uniqueStudents = new Set(enrollments.map(e => e.email_id));
+                    document.getElementById('activeStudents').textContent = uniqueStudents.size;
+                })
+                .catch(error => console.error('Error loading enrollments:', error));
+            
+            // Load user's enrolled courses
+            const userEmail = localStorage.getItem('email');
+            if (userEmail) {
+                fetch('http://localhost:8080/courses/enrolled')
+                    .then(response => response.json())
+                    .then(enrollments => {
+                        const userEnrollments = enrollments.filter(e => e.email_id === userEmail);
+                        document.getElementById('enrolledCoursesCount').textContent = userEnrollments.length;
+                    })
+                    .catch(error => console.error('Error loading user courses:', error));
+            }
+        }
+
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const finalValue = stat.textContent;
+                let currentValue = 0;
+                const increment = finalValue.includes('%') ? 1 : 
+                                 finalValue.includes('.') ? 0.1 : 1;
+                const isDecimal = finalValue.includes('.');
+                
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (isDecimal && currentValue >= parseFloat(finalValue)) {
+                        stat.textContent = finalValue;
+                        clearInterval(timer);
+                    } else if (!isDecimal && currentValue >= parseInt(finalValue)) {
+                        stat.textContent = finalValue;
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = isDecimal ? currentValue.toFixed(1) : Math.floor(currentValue);
+                    }
+                }, 50);
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on load
+            animateStats();
+            
+            // Load dashboard data
+            loadDashboardData();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        // Handle browser back/forward navigation
+        window.addEventListener('pageshow', function(event) {
+            // If page is loaded from cache (back button), reload dashboard data
+            if (event.persisted) {
+                loadDashboardData();
+            }
+        });
+
+        // Handle visibility change (when user returns to tab)
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                loadDashboardData();
+            }
+        });
+    </script>
+</body>
+</html>

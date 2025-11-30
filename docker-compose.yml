@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    container_name: course-registration-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/course_reg_sys
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: BalajiSQL@0211
+
+  mysql:
+    image: mysql:8
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: BalajiSQL@0211
+      MYSQL_DATABASE: course_reg_sys
+    
